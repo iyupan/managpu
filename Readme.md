@@ -17,11 +17,11 @@ pip install managpu
 ## How to choose gpus?
  - Import the package
  ```python
-from managpu import GpuManager
+import managpu as mg
 ```
  - Create an entry by
  ```python
-my_gpu = GpuManager(visible_gpus)
+my_gpu = mg.GpuManager(visible_gpus)
 ```
  - Then run
  ```python
