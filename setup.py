@@ -16,4 +16,5 @@ setup(name='managpu',
       long_description="Make setting gpus more easy.",
       license="GPLv3",
       platforms=["any"],
+      install_requires = ["pynvml>=8.0.1"]
 )
