@@ -85,11 +85,16 @@ class GPUBase(GPUInfo, GPUControl):
                     chosen_gpu_amount += 1
                     if chosen_gpu_amount == top_k:
                         break
+
         print("Sorted by memory:")
         for one_gpu in sorted_visible_gpus:
-            print("GPU Index: %d" % one_gpu.gpu_index, "    GPU FreeMemory: %d MB" % one_gpu.freemem,
-                  "    GPU Util: %d%%" % one_gpu.gpu_util)
+            # print("GPU Index: %d" % one_gpu.gpu_index + "\t" + "GPU FreeMemory: %d MB" % one_gpu.freemem + "\t" +
+            #       "GPU Util: %d%%" % one_gpu.gpu_util)
+            print("    {0:<18} {1:<30} {2:<16}".format("GPU Index: %d" % one_gpu.gpu_index, "GPU FreeMemory: %d MB" \
+                                                   % one_gpu.freemem, "GPU Util: %d%%" % one_gpu.gpu_util))
+        # "GPU Index: %d" % one_gpu.gpu_index, "GPU FreeMemory: %d MB" % one_gpu.freemem, "GPU Util: %d%%" % one_gpu.gpu_util
         print("Qualified GPU Index is:", to_set_indexes)
+
         assert len(to_set_indexes) == top_k, "The gpu of gpu_util <= %d is %d, not equal top_k %d." \
                                              % (util_limit, len(to_set_indexes), top_k)
         self.set_specified_gpu(to_set_indexes)
