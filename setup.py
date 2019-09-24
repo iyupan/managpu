@@ -3,7 +3,7 @@
 from setuptools import setup, find_packages
 
 __author__ = "Perry"
-__version__ = "1.1.2"
+__version__ = "1.2.0"
 
 setup(name='managpu',
       version=__version__,

@@ -118,17 +118,57 @@ class GPULinux(GPUBase):
         super(GPULinux, self).__init__(visible_gpu_indexes)
 
     def get_gpu_machine(self) -> GPUMachine:
-        from pynvml.smi import nvidia_smi
-        nvsmi = nvidia_smi.getInstance()
-        gpu_info = nvsmi.DeviceQuery('index, utilization.gpu, memory.free, count')
-        gpu_machine = GPUMachine(gpu_info["count"])
-        for one_gpu in gpu_info["gpu"]:
+
+        # from pynvml.smi import nvidia_smi
+        # nvsmi = nvidia_smi.getInstance()
+        # gpu_info = nvsmi.DeviceQuery('index, utilization.gpu, memory.free, count')
+        # gpu_machine = GPUMachine(gpu_info["count"])
+        #
+        # for one_gpu in gpu_info["gpu"]:
+        #     gpu_machine.add_gpu_state(
+        #         GPUState(free=one_gpu["fb_memory_usage"]["free"],
+        #                  util=one_gpu["utilization"]["gpu_util"],
+        #                  index=int(one_gpu["minor_number"])
+        #                  )
+        #     )
+
+        import pynvml
+
+        MB = 1024 * 1024
+
+        pynvml.nvmlInit()
+
+        device_count = pynvml.nvmlDeviceGetCount()
+        gpu_machine = GPUMachine(device_count)
+
+        pynvml.nvmlShutdown()
+
+        for index in range(device_count):
+            pynvml.nvmlInit()
+
+            handle = pynvml.nvmlDeviceGetHandleByIndex(index)
+
+            index = pynvml.nvmlDeviceGetIndex(handle)
+
+            try:
+                utilization = pynvml.nvmlDeviceGetUtilizationRates(handle)
+            except pynvml.NVMLError:
+                utilization = None  # Not supported
+
+            try:
+                memory = pynvml.nvmlDeviceGetMemoryInfo(handle)  # in Bytes
+            except pynvml.NVMLError:
+                memory = None  # Not supported
+
+            pynvml.nvmlShutdown()
+
             gpu_machine.add_gpu_state(
-                GPUState(free=one_gpu["fb_memory_usage"]["free"],
-                         util=one_gpu["utilization"]["gpu_util"],
-                         index=int(one_gpu["minor_number"])
+                GPUState(free=memory.free // MB,
+                         util=utilization.gpu,
+                         index=index
                          )
             )
+
         return gpu_machine
 
     def set_specified_gpu(self, gpu_indexes: list):
