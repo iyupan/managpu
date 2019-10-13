@@ -1,4 +1,5 @@
 [![Pypi Version](https://img.shields.io/pypi/v/managpu?color=green)](https://pypi.org/project/managpu/)
+
 # managpu
 
 It is used to choose gpu to run for AI.
