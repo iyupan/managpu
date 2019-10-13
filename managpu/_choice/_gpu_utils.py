@@ -63,7 +63,7 @@ class GPUBase(GPUInfo, GPUControl):
     def set_by_memory(self, top_k, util_limit=None):
         """
 
-        :param top_k: memory size of Top 3
+        :param top_k: memory size of Top k
         :param util_limit: m in [0, 100] means m%
         :return:
         """
@@ -88,11 +88,8 @@ class GPUBase(GPUInfo, GPUControl):
 
         print("Sorted by memory:")
         for one_gpu in sorted_visible_gpus:
-            # print("GPU Index: %d" % one_gpu.gpu_index + "\t" + "GPU FreeMemory: %d MB" % one_gpu.freemem + "\t" +
-            #       "GPU Util: %d%%" % one_gpu.gpu_util)
             print("    {0:<18} {1:<30} {2:<16}".format("GPU Index: %d" % one_gpu.gpu_index, "GPU FreeMemory: %d MB" \
                                                    % one_gpu.freemem, "GPU Util: %d%%" % one_gpu.gpu_util))
-        # "GPU Index: %d" % one_gpu.gpu_index, "GPU FreeMemory: %d MB" % one_gpu.freemem, "GPU Util: %d%%" % one_gpu.gpu_util
         print("Qualified GPU Index is:", to_set_indexes)
 
         assert len(to_set_indexes) == top_k, "The gpu of gpu_util <= %d is %d, not equal top_k %d." \
@@ -118,22 +115,7 @@ class GPULinux(GPUBase):
         super(GPULinux, self).__init__(visible_gpu_indexes)
 
     def get_gpu_machine(self) -> GPUMachine:
-
-        # from pynvml.smi import nvidia_smi
-        # nvsmi = nvidia_smi.getInstance()
-        # gpu_info = nvsmi.DeviceQuery('index, utilization.gpu, memory.free, count')
-        # gpu_machine = GPUMachine(gpu_info["count"])
-        #
-        # for one_gpu in gpu_info["gpu"]:
-        #     gpu_machine.add_gpu_state(
-        #         GPUState(free=one_gpu["fb_memory_usage"]["free"],
-        #                  util=one_gpu["utilization"]["gpu_util"],
-        #                  index=int(one_gpu["minor_number"])
-        #                  )
-        #     )
-
         import pynvml
-
         MB = 1024 * 1024
 
         pynvml.nvmlInit()
@@ -147,7 +129,6 @@ class GPULinux(GPUBase):
             pynvml.nvmlInit()
 
             handle = pynvml.nvmlDeviceGetHandleByIndex(index)
-
             index = pynvml.nvmlDeviceGetIndex(handle)
 
             try:
