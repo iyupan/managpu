@@ -5,13 +5,13 @@
 It is used to choose gpu to run for AI.
 
 ## How to install it?
- - Download it, and then run
+ - Setup by hand:
  
  ```python
 python setup.py build
 python setup.py install
 ```
- - Use `pip` by running command
+ - Setup by `pip`
  
 ```bash
 pip install managpu
