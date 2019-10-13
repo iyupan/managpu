@@ -11,7 +11,7 @@ It is used to choose gpu to run for AI.
 python setup.py build
 python setup.py install
 ```
- - Setup by `pip`
+ - Setup by `pip`:
  
 ```bash
 pip install managpu
