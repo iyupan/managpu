@@ -30,6 +30,14 @@ my_gpu = GpuManager(visible_gpus)
 ```
  - Then choose gpus:
  
- ```python
-res = my_gpu.set_by_memory(top_k, limited_gpu_util)
-```
+    - Choose in terms of free memory:
+    
+         ```python
+        res = my_gpu.set_by_memory(top_k, limited_gpu_util)
+        ```
+
+    - Choose specific gpus:
+    
+         ```python
+        res = my_gpu.set_specified_gpu(gpus)
+        ```

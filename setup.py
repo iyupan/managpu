@@ -2,15 +2,17 @@
 
 from setuptools import setup, find_packages
 
-__author__ = "Perry"
-__version__ = "1.2.2"
 
-setup(name='managpu',
+__author__ = "Perry"
+__version__ = "1.2.3"
+
+setup(
+      name='managpu',
       version=__version__,
       description='managpu: for choosing gpus',
       author=__author__,
       maintainer=__author__,
-      url='https://github.com/DogfishBone/managpu',
+      url='https://github.com/dataair/managpu',
       packages=find_packages(),
       py_modules=[],
       long_description="Make setting gpus more easy.",

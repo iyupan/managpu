@@ -5,12 +5,12 @@
 
 __all__ = ["GpuManager"]
 
-from managpu._choice._gpu_utils import GPULinux
+from ._gpu_utils import GPULinux
 import platform
 
 
 class GpuManager(object):
-    def __init__(self, visible_gpus: list=None):
+    def __init__(self, visible_gpus: list = None):
         # Type check
         assert isinstance(visible_gpus, list) or visible_gpus is None, "The visible_gpus should be a list or None"
         self.__SUPPORT_OS = ["Linux"]
