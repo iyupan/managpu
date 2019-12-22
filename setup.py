@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 
 __author__ = "Perry"
-__version__ = "1.2.3"
+__version__ = "1.2.4"
 
 setup(
       name='managpu',
@@ -12,7 +12,7 @@ setup(
       description='managpu: for choosing gpus',
       author=__author__,
       maintainer=__author__,
-      url='https://github.com/dataair/managpu',
+      url='https://github.com/perryupan/managpu',
       packages=find_packages(),
       py_modules=[],
       long_description="Make setting gpus more easy.",
